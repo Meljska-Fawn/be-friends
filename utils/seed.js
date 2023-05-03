@@ -20,6 +20,7 @@ connection.once('open', async () => {
     for (let i = 0; i < 20; i++) {
         // Get some random thought objects using a helper function that we imported from ./data
         const thoughts = getRandomThoughts(20);
+        const friends = getRandomUsername()*3;
 
         const username = getRandomUsername();
         const email = `${username}${Math.floor(Math.random() * 9000) + 18}@gmail.com`;
@@ -28,6 +29,7 @@ connection.once('open', async () => {
             username,
             email,
             thoughts,
+            friends,
         });
     }
 
