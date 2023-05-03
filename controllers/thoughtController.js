@@ -29,6 +29,13 @@ module.exports = {
     async createThought(req, res) {
         try {
             const thought = await Thought.create(req.body);
+
+            await User.findOneAndUpdate(
+                { _id: body.userId },
+                { $push: { thoughts: thought._id } },
+                { new: true },
+            );
+
             res.json(thought);
         } catch (err) {
             console.log(err);
@@ -64,6 +71,13 @@ module.exports = {
             }
 
             await Reaction.deleteMany({ _id: { $in: thought.reactions } });
+
+            await User.findOneAndUpdate(
+                { thoughts: params.thoughtId },
+                { $pull: { thoughts: params.thoughtId } },
+                { new: true }
+            );
+
             res.json({ message: 'Thought and reactions deleted!' });
         } catch (err) {
             console.log(err);
@@ -85,7 +99,7 @@ module.exports = {
             if (!thought) {
                 return res
                     .status(404)
-                    .json({ message: 'No thought found with that ID :(' });
+                    .json({ message: 'No thought found with that ID' });
             }
 
             res.json(thought);
