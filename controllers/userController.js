@@ -1,22 +1,12 @@
 const { User, Thought } = require('../models');
 
-const friendCount = async () => {
-    const numberOfFriends = await User.aggregate().count('friendCount');
-    return numberOfFriends;
-}
-
 module.exports = {
     // get all users
     async getUsers(req, res) {
         try {
             const users = await User.find().populate('thoughts').populate('friends');
 
-            const userObj = {
-                users,
-                friendCount: await friendCount(),
-            };
-
-            res.json(userObj);
+            res.json(users);
         } catch (err) {
             console.log(err);
             return res.status(500).json(err);
@@ -51,7 +41,9 @@ module.exports = {
     // update a user
     async updateUser(req, res) {
         try {
-            const user = await User.findOneAndUpdate({ _id: req.params.userId });
+            const user = await User.findOneAndUpdate( req.params.userId, 
+                req.body, 
+                { new: true, runValidators: true });
             res.json(user);
         } catch (err) {
             console.log(err);
