@@ -1,7 +1,7 @@
 const { User, Thought, Reaction } = require('../models');
 
 module.exports = {
-    // get all throughts
+    // get all thoughts
     async getThoughts(req, res) {
         try {
             const thoughts = await Thought.find();
@@ -113,7 +113,7 @@ module.exports = {
         try {
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reaction: { reactionId: req.params.reactionId } } },
+                { $pull: { reactions: { reactionId: req.params.reactionId } } },
                 { runValidators: true, new: true }
             );
 
