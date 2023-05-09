@@ -39,21 +39,10 @@ const thoughts = [
     'The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.'
 ];
 
-// [
-//     {
-//     "thoughtText": "The best and most beautiful things in the world cannot be seen or even touched - they must be felt with the heart.",
-//     "username": "BeachBum123",
-//     "reactions": [],
-//     },
-// ]
-
 // Get a random item given an array
 const getRandomArrItem = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-// Gets a random username
-const getRandomUsername = () =>
-    `${getRandomArrItem(usernames)}`;
-
+// Gets friends based on userData so a user can't be their own friend and someone can't be a friend to a user twice 
 const getFriends =(userData, userId, friendCount) => {
     const friends = [];
 
@@ -63,15 +52,11 @@ const getFriends =(userData, userId, friendCount) => {
         const friend = getRandomArrItem(possibleFriends);
         if (!friends.includes(friend._id)) {
             friends.push(friend._id);
-
         }
     }
-
     return friends
-}
-
-
-
+};
+// Gets a random thought and pushes them to the results array
 const getRandomThoughts = (int) => {
     const results = [];
     for (let i = 0; i < int; i++) {

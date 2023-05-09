@@ -9,11 +9,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
 
-// mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/snetwork', {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
 db.once('open', () => {
   app.listen(PORT, () => {
     console.log(`Running on localhost:${PORT}!`);
